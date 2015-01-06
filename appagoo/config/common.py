@@ -159,6 +159,7 @@ class Common(Configuration):
         'django.contrib.messages.context_processors.messages',
         'django.core.context_processors.request',
         # Your stuff: custom template context processers go here
+        'dealer.contrib.django.context_processor',
     )
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
@@ -269,3 +270,6 @@ class Common(Configuration):
         cls.DATABASES['default']['ATOMIC_REQUESTS'] = True
 
     # Your common stuff: Below this line define 3rd party library settings
+
+    DEALER_TYPE = 'git'
+    DEALER_BACKENDS = 'git'
