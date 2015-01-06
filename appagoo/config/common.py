@@ -111,7 +111,7 @@ class Common(Configuration):
 
     # DATABASE CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-    DATABASES = values.DatabaseURLValue('postgres://localhost/appagoo')
+    DATABASES = values.DatabaseURLValue('postgres://appagoo:appagoo@localhost/appagoo')
     # END DATABASE CONFIGURATION
 
     # CACHING

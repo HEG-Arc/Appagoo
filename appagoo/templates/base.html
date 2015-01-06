@@ -1,87 +1,124 @@
-{% load staticfiles i18n %}<!DOCTYPE html>
-<html lang="en" ng-app>
-  <head>
-    <meta charset="utf-8">
+{% load staticfiles i18n %}<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Appagoo{% endblock title %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
     {% block css %}
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/foundation.css' %}" />
+    {% endblock css %}
+    <script src="{% static 'js/vendor/modernizr.js' %}"></script>
+</head>
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<body>
+<div class="row">
+    <div class="large-12 columns">
+        <nav class="top-bar" data-topbar>
+            <ul class="title-area">
 
-    <!-- Your stuff: Third-party css libraries go here -->
+                <li class="name">
+                    <h1><a href="/">Appagoo</a></h1>
+                </li>
+                <li class="toggle-topbar menu-icon">
+                    <a href="#"><span>menu</span></a>
+                </li>
+            </ul>
+            <section class="top-bar-section">
+                <ul class="left">
+                    <li class="active"><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'about' %}">About</a></li>
 
-    <!-- This file store project specific CSS -->
-    <link href="{% static 'css/project.css' %}" rel="stylesheet">
-    {% endblock %}
-
-    {% block angular %}
-      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-    {% endblock %}
-
-  </head>
-
-  <body>
-
-    <div class="header navbar">
-      <div class="container">
-        <a class="navbar-brand" href="/">Appagoo</a>
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="{% url 'home' %}">Home</a></li>
-          <li><a href="{% url 'about' %}">About</a></li>
-
-          {% if request.user.is_authenticated %}
-            <li><a href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a></li>
-            <li><a href="{% url 'account_logout' %}">{% trans "Logout" %}</a></li>
-          {% else %}
-            <li><a href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a></li>
-            <li><a href="{% url 'account_login' %}">{% trans "Log In" %}</a></li>
-          {% endif %}
-        </ul>
-      </div>
+                    <li>
+                        <a href="#">Link 2</a>
+                    </li>
+                </ul>
+                <ul class="right">
+                    {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a></li>
+                        <li><a href="{% url 'account_logout' %}">{% trans "Logout" %}</a></li>
+                    {% else %}
+                        <li><a href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a></li>
+                        <li><a href="{% url 'account_login' %}">{% trans "Log In" %}</a></li>
+                    {% endif %}
+                </ul>
+            </section>
+        </nav>
     </div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div><br>
+<div class="row">
+    <div class="large-12 columns">
 
-    <div class="container">
-        
-      {% if messages %}
-          {% for message in messages %}
-              <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
-          {% endfor %}
-      {% endif %}
+        {% block content %}
+            <div class="row">
+                <div class="large-3 small-6 columns">
+                    <img src="http://placehold.it/250x250&amp;text=Thumbnail">
+                    <h6 class="panel">Description</h6>
+                </div>
+                <div class="large-3 small-6 columns">
+                    <img src="http://placehold.it/250x250&amp;text=Thumbnail">
+                    <h6 class="panel">Description</h6>
+                </div>
+                <div class="large-3 small-6 columns">
+                    <img src="http://placehold.it/250x250&amp;text=Thumbnail">
+                    <h6 class="panel">Description</h6>
+                </div>
+                <div class="large-3 small-6 columns">
+                    <img src="http://placehold.it/250x250&amp;text=Thumbnail">
+                    <h6 class="panel">Description</h6>
+                </div>
+            </div>
+        {% endblock content %}
 
-      {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
-      {% endblock content %}
+    </div>
+</div>
 
-    </div> <!-- /container -->
-    
-    {% block modal %}{% endblock modal %}
+<footer class="row">
+    <div class="large-12 columns">
+        <hr>
+        <div class="row">
+            <div class="large-6 columns">
+                <p>© Appagoo 2015 | Powered by HE-Arc</p>
+            </div>
+            <div class="large-6 columns">
+                <ul class="inline-list right">
+                    <li>
+                        <a href="#">Link 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Link 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Link 3</a>
+                    </li>
+                    <li>
+                        <a href="#">Link 4</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    {% block javascript %}
-      <!-- Latest JQuery -->
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+{% block javascript %}
+    <script src="{% static 'js/foundation.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.js' %}"></script>
+    <script src="{% static 'js/foundation/foundation.js' %}"></script>
+{% endblock javascript %}
 
-      <!-- Latest compiled and minified JavaScript -->
-      <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script>
+    $(document).foundation();
 
-      <!-- Your stuff: Third-party javascript libraries go here -->
-
-      <!-- place project specific Javascript in this file -->
-      <script src="{% static 'js/project.js' %}"></script>
-    {% endblock javascript %}
-  </body>
+    var doc = document.documentElement;
+    doc.setAttribute('data-useragent', navigator.userAgent);
+</script>
+</body>
 </html>
- 
