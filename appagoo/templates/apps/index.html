@@ -1,0 +1,46 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/apps/style.css' %}" />
+
+{% if applications %}
+
+    {% csrf_token %}
+        <div id="store_header">
+            <input type="text" placeholder="search an application" /> Sorts apps by
+            <select name="filter">
+                <option>Popularity</option>
+                <option>Price</option>
+                <option>Rating</option>
+            </select>
+        </div>
+        <div id="store_main">
+            <div id="store_menu"></div>
+            <div id="store_content">
+                {% for app in applications %}
+                    <span id="app"><a target="_blank" href="{{ app.market_url }}"><img src="{{ app.icon }}"/>{{ app.name }}</a></span>
+                    {% if forloop.counter|divisibleby:3 %}
+                        <br />
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div id="store_footer">
+            <div class="pagination">
+                <span class="step-links">
+                    {% if applications.has_previous %}
+                        <a href="?page={{ applications.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ applications.number }} of {{ applications.paginator.num_pages }}.
+                    </span>
+
+                    {% if applications.has_next %}
+                        <a href="?page={{ applications.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+{% else %}
+    <p>No apps are available.</p>
+{% endif %}
