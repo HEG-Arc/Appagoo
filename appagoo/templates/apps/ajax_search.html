@@ -1,0 +1,27 @@
+{% if applications.count > 0 %}
+{% for app in applications %}
+    <span id="app"><a target="_blank" href="{{ app.market_url }}"><img src="{{ app.icon }}" />{{ app.name }}</a><br />{{ app.downloads.label }}<br />{{ app.evaluation }}<br />{{ app.currency }} {{ app.price }}</span>
+    {% if forloop.counter|divisibleby:3 %}
+        <br />
+    {% endif %}
+{% endfor %}
+{% else %}
+    <span>Nothing to show!</span>
+{% endif %}
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if applications.has_previous %}
+            <a href="?page={{ applications.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ applications.number }} of {{ applications.paginator.num_pages }}.
+        </span>
+
+        {% if applications.has_next %}
+            <a href="?page={{ applications.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>

@@ -6,6 +6,7 @@
     <title>{% block title %}Appagoo{% endblock title %}</title>
     {% block css %}
         <link rel="stylesheet" href="{% static 'css/foundation.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/apps/style.css' %}" />
     {% endblock css %}
     <script src="{% static 'js/vendor/modernizr.js' %}"></script>
 </head>
@@ -95,6 +96,7 @@
     <script src="{% static 'js/foundation.min.js' %}"></script>
     <script src="{% static 'js/vendor/jquery.js' %}"></script>
     <script src="{% static 'js/foundation/foundation.js' %}"></script>
+    <script src="{% static 'js/apps.js' %}"></script>
 {% endblock javascript %}
 
 <script>

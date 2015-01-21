@@ -1,27 +1,28 @@
 #store_header, #store_menu, #store_content, #store_footer {
-padding:1px 0;
+    padding:1px 0;
 }
+
 #store_header {
-background-color:#FF9900;
-text-align:center;
+    text-align:center;
 }
+
 #main {
-max-with:960px;
-margin:auto;
+    max-with:960px;
+    margin:auto;
 }
+
 #store_menu  {
-float:left;
-width:240px;
-background-color:#FF3366;
+    float:left;
+    width:240px;
 }
+
 #store_content {
-margin-left:245px;
-background-color:lightgrey;
+    margin-left:245px;
 }
+
 #store_footer {
-background-color:#669933;
-text-align:center;
-clear:both;
+    text-align:center;
+    clear:both;
 }
 
 #app  {
