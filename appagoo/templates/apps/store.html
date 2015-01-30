@@ -1,0 +1,145 @@
+{% extends "index.html" %}
+
+{% block store %}
+
+    <div  class="section">
+        <div class="container">
+          <div class="row accent-c1">
+            <div class="c3">
+              <img src="images/avatar-shop.png" class="img-responsive deco" >
+            </div>
+            <div class="c1 center">
+              <span class="disc disc-3x acc-bg">2</span>
+            </div>
+            <div class="c7">
+              <h1>Check what’s in the <span class="acc-text">store</span></h1>
+              <p>Install apps knowing how they match your profile</p>
+            </div>
+          </div>
+          <div class="row palebox">
+            <div class="c3">
+                {%  csrf_token %}
+                <input type="search" class="form-control" placeholder="Search..." id="search">
+            </div>
+            <div class="c3">
+              <h3>Sort apps by</h3>
+            </div>
+            <div class="c3">
+              <select class="form-control" id="filter">
+                <option>Popularity</option>
+                <option>Price</option>
+                <option>Rating</option>
+              </select>
+            </div>
+            <div class="c3">
+              <select class="form-control" id="ascdesc">
+                <option>Ascending</option>
+                <option>Descending</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="c3 palebox">
+              <h3>Price</h3>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" value="free" id="price_free" checked>
+                  Free
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" value="commercial" id="price_commercial">
+                  Commercial
+                </label>
+              </div>
+              <h3 class="overline">Minimum rating</h3>
+
+              <input type="number" name="minimal_rating" id="min_rating" data-max="5" data-min="1" class="rating" data-clearable="remove" data-icon-lib="fa" data-active-icon="fa-star obvious" data-inactive-icon="fa-star faded" data-clearable-icon="fa-trash-o" data-clearable="remove"/>
+
+              <h3 class="overline">Categories</h3>
+              <div class="dropdown">
+                <button type="button" class="btn btn-xs btn-removable">
+                  Games <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                <button type="button" class="btn btn-xs btn-removable">
+                  Finance <span class="glyphicon glyphicon-remove"></span>
+                </button>
+
+
+                <div class="dropdown marginT">
+                  <button class="btn dropdown-toggle fill" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                    Add a category
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Finance</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Sports</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Lorem</a></li>
+                  </ul>
+                </div>
+
+              </div>
+
+            </div>
+            <div class="c9">
+            {% if applications %}
+                {% for app in applications %}
+                    {% if forloop.counter|add:"-1"|divisibleby:"3" or forloop.counter == 1 %}
+                        <div class="row">
+                    {% endif %}
+                        <!-- one app -->
+                        <div class="c4">
+                          <div class="app-info">
+                            <div class="pop-corner bg-yes">
+                              <i class="fa fa-check"></i>
+                            </div>
+                            <div class="row">
+                              <div class="wx4">
+                                <a target="_blank" href="{{ app.market_url }}"><img src="{{ app.icon }}" class="img-responsive"></a>
+                              </div>
+                              <div class="wx8">
+                                <a target="_blank" href="{{ app.market_url }}"><p>{{ app.name }}</p></a>
+                                <div class="small">
+                                  <p><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></p>
+                                  <p>{{ app.downloads.label }} ratings</p>
+                                  <p class="text-yes">
+                                      {% if app.price == 0 %}
+                                          FREE
+                                      {% else %}
+                                          {{ app.currency }} {{ app.price }}
+                                      {% endif %}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    {% if forloop.counter|divisibleby:3 %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>No apps are available.</p>
+            {% endif %}
+              <!-- last line nav -->
+              <div class="row">
+                <div class="cx6">
+                  <button type="button" class="btn btn-disabled" disabled="">
+                    <i class="fa fa-arrow-left"></i> Previous
+                  </button>
+                </div>
+                <div class="cx6 right">
+                  <button type="button" class="btn">
+                    Next <i class="fa fa-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+{% endblock store %}

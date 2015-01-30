@@ -15,8 +15,10 @@ class Category(models.Model):
 
 
 class Downloads(models.Model):
+    rank = models.IntegerField(null=True)
     label = models.CharField(max_length=500, blank=True, null=True)
-
+    def __unicode__(self):  # Python 3: def __str__(self):
+        return self.label
 
 class Content(models.Model):
     label = models.CharField(max_length=500, blank=True, null=True)

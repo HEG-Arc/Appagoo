@@ -42,6 +42,7 @@ class Common(Configuration):
         'allauth',  # registration
         'allauth.account',  # registration
         'allauth.socialaccount',  # registration
+        'rest_framework', # REST api
     )
 
     # Apps specific for this project go here.
@@ -53,6 +54,13 @@ class Common(Configuration):
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
     INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
     # END APP CONFIGURATION
+
+    REST_FRAMEWORK = {
+        # Use Django's standard `django.contrib.auth` permissions,
+        # or allow read-only access for unauthenticated users.
+        'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'],
+        'PAGINATE_BY': 10
+    }
 
     # MIDDLEWARE CONFIGURATION
     MIDDLEWARE_CLASSES = (

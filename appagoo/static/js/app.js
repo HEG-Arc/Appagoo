@@ -1,0 +1,26 @@
+angular.module('storeApp', ['ngResource'])
+    .config(function ($interpolateProvider, $httpProvider, $resourceProvider) {
+    // Force angular to use square brackets for template tag
+    // The alternative is using {% verbatim %}
+    $interpolateProvider.startSymbol('[[').endSymbol(']]');
+
+    // CSRF Support
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+
+    // This only works in angular 3!
+    // It makes dealing with Django slashes at the end of everything easier.
+    $resourceProvider.defaults.stripTrailingSlashes = false;
+    })
+    .controller('StoreController', function ($scope) {
+        $scope.applications = [{"id":569,"name":"Despicable Me","price":0.0,"currency":"USD","evaluation":4,"number_evaluations":5269968,"icon":"https://lh3.ggpht.com/glIAkU137f1FL67f4kJ2ERXnSllJhShkDuxvEAKHulTRUcB1zMWYfKHWzZL2-JgnRxgk=w300","market_url":"https://play.google.com/store/apps/details?id=com.gameloft.android.ANMP.GloftDMHM","downloads":"http://127.0.0.1:8000/api/downloads/12/","category":"http://127.0.0.1:8000/api/categories/10/"},{"id":570,"name":"Farm Heroes Saga","price":0.0,"currency":"USD","evaluation":4.3294849396,"number_evaluations":4235866,"icon":"https://lh6.ggpht.com/HsCq84uTT7K1wpZMujCnxMF4JMb-pV3qSPyx5fvMEvBPBOhys2YhibtXYPphC3SCa3k=w300","market_url":"https://play.google.com/store/apps/details?id=com.king.farmheroessaga","downloads":"http://127.0.0.1:8000/api/downloads/12/","category":"http://127.0.0.1:8000/api/categories/10/"},{"id":572,"name":"Clean Master - Free Optimizer","price":0.0,"currency":"USD","evaluation":4.6689634323,"number_evaluations":19203078,"icon":"https://lh3.ggpht.com/hx9UAWTinSn-R_CQleBveiMFoiW7XKxBl1gU0ev4zZ2v5OGxFZJ_k_370vwDzAJ4vho=w300","market_url":"https://play.google.com/store/apps/details?id=com.cleanmaster.mguard","downloads":"http://127.0.0.1:8000/api/downloads/12/","category":"http://127.0.0.1:8000/api/categories/37/"},{"id":573,"name":"WhatsApp Wallpaper","price":0.0,"currency":"USD","evaluation":3.9899449348,"number_evaluations":603581,"icon":"https://lh4.ggpht.com/7jfcnc_BKw-oGhC-aFOCQoO6cgAHXi5daP85zSzvOBGGv7FHCHL4f7oJjgswVCoXqsRp=w300","market_url":"https://play.google.com/store/apps/details?id=com.whatsapp.wallpaper","downloads":"http://127.0.0.1:8000/api/downloads/18/","category":"http://127.0.0.1:8000/api/categories/26/"},{"id":574,"name":"Amazon Kindle","price":0.0,"currency":"USD","evaluation":4.1331763268,"number_evaluations":364451,"icon":"https://lh5.ggpht.com/sxnFjIWmIPhBg09VXkKdVY-Rwn7l1Bfxq-eo6wIM1d2wWHDApGk3w-3NN77Td_BwYz4=w300","market_url":"https://play.google.com/store/apps/details?id=com.amazon.kindle","downloads":"http://127.0.0.1:8000/api/downloads/18/","category":"http://127.0.0.1:8000/api/categories/6/"},{"id":575,"name":"Photo Grid - Collage Maker","price":0.0,"currency":"USD","evaluation":4.5170049667,"number_evaluations":2982086,"icon":"https://lh5.ggpht.com/XwIW2lUS8s1bqlrQvARsCzC0oIIdIQMDTySnEVMujzPTpZeDKLCxb5--JeEjXn2Soo5N=w300","market_url":"https://play.google.com/store/apps/details?id=com.roidapp.photogrid","downloads":"http://127.0.0.1:8000/api/downloads/12/","category":"http://127.0.0.1:8000/api/categories/27/"},{"id":577,"name":"Street View on Google Maps","price":0.0,"currency":"USD","evaluation":4.2653956413,"number_evaluations":734149,"icon":"https://lh5.ggpht.com/qfNcle-ZUknhjFjBf7W8bly6vMcny1nrkhylWrdKNM33FhB_FiXnK3aTntkA3OJxOA=w300","market_url":"https://play.google.com/store/apps/details?id=com.google.android.street","downloads":"http://127.0.0.1:8000/api/downloads/21/","category":"http://127.0.0.1:8000/api/categories/39/"},{"id":578,"name":"ASTRO File Manager with Cloud","price":0.0,"currency":"USD","evaluation":4.2976589203,"number_evaluations":512292,"icon":"https://lh3.ggpht.com/nmTyhok_wUmk0XFcHcCtBQP1e5kebd2fo7kRho_cst-r1O1zavY2o9id45OxOkLjiGE=w300","market_url":"https://play.google.com/store/apps/details?id=com.metago.astro","downloads":"http://127.0.0.1:8000/api/downloads/18/","category":"http://127.0.0.1:8000/api/categories/28/"},{"id":579,"name":"Candy Crush Saga","price":0.0,"currency":"USD","evaluation":4.335088253,"number_evaluations":10171675,"icon":"https://lh3.ggpht.com/qb10dbyF9N8WbpF-Rx7ckS0Oqub2hi7WuvIzC00gkC5L28QudPQ-UJmSmdxFwOZvBw=w300","market_url":"https://play.google.com/store/apps/details?id=com.king.candycrushsaga","downloads":"http://127.0.0.1:8000/api/downloads/12/","category":"http://127.0.0.1:8000/api/categories/10/"},{"id":580,"name":"Google Play Books","price":0.0,"currency":"USD","evaluation":3.8315105438,"number_evaluations":747843,"icon":"https://lh3.ggpht.com/EvTGh2rm-wZpXkleg2sN9fUQeFCxKYPiRkVH2RTqiDLWi12iqWcQFFc8Fi8yoBCo-EKF=w300","market_url":"https://play.google.com/store/apps/details?id=com.google.android.apps.books","downloads":"http://127.0.0.1:8000/api/downloads/21/","category":"http://127.0.0.1:8000/api/categories/6/"}]
+    });
+
+/*
+    .factory('StoreService', ['$resource', function($resource) {
+        var factory = {
+            applications: $resource()
+        }
+        return $resource('/api/applications/:id');
+    }]);
+*/

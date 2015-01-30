@@ -1,11 +1,29 @@
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from rest_framework import viewsets
+from serializers import ApplicationSerializer, DownloadsSerializer, CategorySerializer
 
-from models import Application
+from models import Application, Downloads, Category
 
 
-def index(request):
+# ViewSets define the view behavior.
+class ApplicationViewSet(viewsets.ModelViewSet):
+    queryset = Application.objects.exclude(icon='').exclude(market_url='').exclude(icon=None).exclude(market_url=None)
+    serializer_class = ApplicationSerializer
+
+
+class DownloadsViewSet(viewsets.ModelViewSet):
+    queryset = Downloads.objects.all()
+    serializer_class = DownloadsSerializer
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+def store(request):
     apps_list = Application.objects.all()
 
     paginator = Paginator(apps_list, 9)
@@ -22,7 +40,7 @@ def index(request):
     args.update(csrf(request))
     args['applications'] = applications
 
-    return render_to_response('apps/index.html', args)
+    return render_to_response('store.html', args)
 
 
 def search(request):
