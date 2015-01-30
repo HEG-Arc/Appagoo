@@ -447,7 +447,7 @@
                 </div>
                 <div class="row">
                   <div class="wx4">
-                    <a target=_blank href=[[application.market_url]]><img src=[[application.icon]] class="img-responsive"></a>
+                    <a target=_blank href=[[application.market_url]]><img ng-src="[[application.icon]]" class="img-responsive"></a>
                   </div>
                   <div class="wx8">
                     <a target=_blank href=[[application.market_url]]><p ng-bind="application.name"></p></a>
@@ -543,7 +543,7 @@
               </button>        
             </div>          
             <div class="cx6 right">
-              <button type="button" class="btn">
+              <button type="button" class="btn" ng-click="nextPage()">
                 Next <i class="fa fa-arrow-right"></i>
               </button>        
             </div>
