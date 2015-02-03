@@ -1,17 +1,25 @@
 /*jQuery time*/
 $(document).ready(function(){
   // customize all inputs (will search for checkboxes and radio buttons)
-  $('input').iCheck({checkboxClass: 'icheckbox_flat'});
-  $('.btn-removable').click(function() {
-    this.remove();
+
+  
+  $('#categories .btn').click(function() {
+    if ($(this).hasClass('unchosen')) {
+      $(this).detach().prependTo("#categories-selected-tags").removeClass('unchosen').addClass('chosen');
+    } else {
+      $(this).detach().prependTo("#categories-unselected-tags").removeClass('chosen').addClass('unchosen');
+
+    }
   });
+
+  $('input').iCheck({checkboxClass: 'icheckbox_flat'});
   $('input.slider').slider({tooltip:'hide'});
 
   //
   // jQuery SmoothScroll | Version 18-04-2013
   //
 
-  $('.smooth-scroll a[href*=#]').click(function() {
+  $('.smooth-scroll a[href*=#], a[href*=#].smooth-scroll').click(function() {
 
      // skip SmoothScroll on links inside accordion titles or scroll boxes also using anchors or if there is a javascript call
      //if($(this).parent().hasClass('accordion-title1')  || $(this).parent().hasClass('accordion-title2') || $(this).attr('href').indexOf('javascript')>-1) return;

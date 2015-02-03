@@ -393,15 +393,12 @@
           
           <input type="number" name="minimal_rating" data-max="5" data-min="1" id="some_id" class="rating" data-clearable="remove" data-icon-lib="fa" data-active-icon="fa-star obvious" data-inactive-icon="fa-star faded" data-clearable-icon="fa-trash-o" data-clearable="remove"/>
 
+
           <h3 class="overline">Categories</h3>
           <h4>Selected categories:</h4>
           <div class="dropdown" id="categories">
-            <div id="categories-selected-tags">
-              <button type="button" class="btn btn-xs chosen">
-                Games
-              </button><button type="button" class="btn btn-xs chosen">
-                Finance
-              </button>
+            <div id="categories-selected-tags" ng-repeat="item in filter.list">
+              <button type="button" class="btn btn-xs chosen" ng-model="filter.check[item]">[[item]]</button>
             </div>
             <h4 class="marginT">Available categories:</h4>
             <div id="categories-unselected-tags">
@@ -414,7 +411,6 @@
 
 
           </div>
-
 
         </div>
         <div class="c9">
@@ -439,7 +435,7 @@
           <div class="row">
 
             <!-- one app -->
-            <div class="c4" ng-repeat="application in (applications | filter:search | orderBy:order)">
+            <div class="c4" ng-repeat="application in (applications | filter: filterByCategory | orderBy:order | limitTo: 9)">
 
               <div class="app-info">
                 <div class="pop-corner bg-yes">
@@ -626,6 +622,8 @@
   <script src="{% static 'js/all-init.js' %}"></script>
 
   <script src="{% static 'js/app.js' %}"></script>
+  <script src="{% static 'js/controllers/main.js' %}"></script>
+  <script src="{% static 'js/filters/makeFilterItems.js' %}"></script>
 
 </body>
 </html>
