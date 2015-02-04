@@ -356,7 +356,7 @@
   <!-- ************************ STORE *************************** -->
 
   <div id="section-store" class="section" ng-app="storeApp">
-    <div class="container" ng-controller="StoreController">
+    <div class="container" ng-controller="storeController">
       <div class="row accent-c1">
         <div class="c3">
           <img src="{% static 'images/avatar-shop.png' %}" class="img-responsive deco" >
@@ -372,7 +372,7 @@
 
       <div class="row">
         <div class="c3 palebox">
-          <input type="search" class="form-control marginB" placeholder="Search..." ng-model="search">
+          <input type="search" class="form-control marginB" placeholder="Search..." ng-model="search.name">
           <button type="button" class="btn btn-lg  bg-c1 fill">Search <i class="fa fa-search"></i></button>
 
 
@@ -391,21 +391,21 @@
           </div>
           <h3 class="overline">Minimum rating</h3>
           
-          <input type="number" name="minimal_rating" data-max="5" data-min="1" id="some_id" class="rating" data-clearable="remove" data-icon-lib="fa" data-active-icon="fa-star obvious" data-inactive-icon="fa-star faded" data-clearable-icon="fa-trash-o" data-clearable="remove"/>
+          <input type="number" name="minimal_rating" data-max="5" data-min="1" id="some_id" class="rating" data-clearable="remove" data-icon-lib="fa" data-active-icon="fa-star obvious" data-inactive-icon="fa-star faded" data-clearable-icon="fa-trash-o" data-clearable="remove" ng-click="filterByMinimalRate(item)"/>
 
 
           <h3 class="overline">Categories</h3>
           <h4>Selected categories:</h4>
           <div class="dropdown" id="categories">
-            <div id="categories-selected-tags" ng-repeat="item in filter.list">
-              <button type="button" class="btn btn-xs chosen" ng-model="filter.check[item]">[[item]]</button>
+            <div id="categories-selected-tags" ng-repeat="item in filter.chosen">
+              <button type="button" class="btn btn-xs chosen" ng-click="removeCategoryFilter(item)">
+                  [[item]]
+              </button>
             </div>
             <h4 class="marginT">Available categories:</h4>
-            <div id="categories-unselected-tags">
-              <button type="button" class="btn btn-xs unchosen">
-                Productivity
-              </button><button type="button" class="btn btn-xs unchosen">
-                Management
+            <div id="categories-unselected-tags" ng-repeat="item in filter.unchosen">
+              <button type="button" class="btn btn-xs unchosen" ng-click="addCategoryFilter(item)">
+                  [[item]]
               </button>
             </div>
 
@@ -420,22 +420,19 @@
             </div>
             <div class="c4">
               <select class="form-control" ng-model="order">
-                <option value="downloads">Popularity</option>
-                <option value="price">Price</option>
-                <option value="number_evaluations">Rating</option>
-              </select>
-            </div>
-            <div class="c4">        
-              <select class="form-control">
-                <option>Ascending</option>
-                <option>Descending</option>
+                <option value="-downloads" selected>Most popular</option>
+                <option value="downloads">Less popular</option>
+                <option value="price">Most expensive</option>
+                <option value="-price">Less expensive</option>
+                <option value="number_evaluations">Most evaluations</option>
+                <option value="-number_evaluations">Less evaluations</option>
               </select>
             </div>
           </div>
           <div class="row">
 
             <!-- one app -->
-            <div class="c4" ng-repeat="application in (applications | filter: filterByCategory | orderBy:order | limitTo: 9)">
+            <div class="c4" ng-repeat="application in (applications | filter: filterByCategory | filter: search | filter: minimalRate:minimalRate | orderBy:order | limitTo: 12)">
 
               <div class="app-info">
                 <div class="pop-corner bg-yes">
@@ -462,74 +459,6 @@
 
           </div > <!-- one row of apps -->
 
-<!--
-          <div class="row">
-
-            <div class="c4">
-              <div class="app-info">
-                <div class="pop-corner bg-yes">
-                  <i class="fa fa-check"></i>
-                </div>
-                <div class="row">
-                  <div class="wx4">
-                    <img src="http://placehold.it/64x64" class="img-responsive">
-                  </div>                
-                  <div class="wx8">
-                    <p>Lorem</p>
-                    <div class="small">
-                      <p><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></p>
-                      <p>15'501'503 ratings</p>
-                      <p class="text-yes">FREE</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="c4">
-              <div class="app-info">
-                <div class="pop-corner bg-no">
-                  <i class="fa fa-exclamation"></i>
-                </div>
-                <div class="row">
-                  <div class="wx4">
-                    <img src="http://placehold.it/64x64" class="img-responsive">
-                  </div>                
-                  <div class="wx8">
-                    <p>Ipsum</p>
-                    <div class="small">
-                      <p><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></p>
-                      <p>3'501'503 ratings</p>
-                      <p class="text-yes">FREE</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="c4">
-              <div class="app-info">
-                <div class="pop-corner bg-maybe">
-                  <i class="appa-tilda"></i>
-                </div>
-                <div class="row">
-                  <div class="wx4">
-                    <img src="http://placehold.it/64x64" class="img-responsive">
-                  </div>                
-                  <div class="wx8">
-                    <p>Dolor</p>
-                    <div class="small">
-                      <p><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></p>
-                      <p>1'101'503 ratings</p>
-                      <p class="text-yes">FREE</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
--->
 
           <!-- last line nav -->
           <div class="row">
@@ -539,7 +468,7 @@
               </button>        
             </div>          
             <div class="cx6 right">
-              <button type="button" class="btn" ng-click="nextPage()">
+              <button type="button" class="btn">
                 Next <i class="fa fa-arrow-right"></i>
               </button>        
             </div>

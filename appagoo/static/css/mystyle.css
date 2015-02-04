@@ -11115,8 +11115,9 @@ body {
 }
 @media (min-width: 768px) {
   .c4 {
-    float: left;
+    /*float: left;*/
     width: 33.3333333333%;
+    display: inline-block;
   }
 }
 

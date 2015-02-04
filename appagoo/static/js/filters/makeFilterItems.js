@@ -13,7 +13,8 @@ filters.filter('makeFilterItems', function() {
             if ((filterOn || angular.isUndefined(filterOn)) && angular.isArray(items)) {
                 var hashCheck = {}, filterItems = {}
                 filterItems.check = {}
-                filterItems.list = []
+                filterItems.unchosen = []
+                filterItems.chosen = []
 
                 var extractValueToCompare = function(item) {
                     if (angular.isObject(item) && angular.isString(filterOn)) {
@@ -35,8 +36,8 @@ filters.filter('makeFilterItems', function() {
                 angular.forEach(items, function(item) {
                     var valueToCheck, isDuplicate = false;
 
-                    for (var i = 0; i < filterItems.list.length; i++) {
-                        if (angular.equals(extractValueToCompare(filterItems.list[i]), extractValueToCompare(item))) {
+                    for (var i = 0; i < filterItems.chosen.length; i++) {
+                        if (angular.equals(extractValueToCompare(filterItems.chosen[i]), extractValueToCompare(item))) {
                             isDuplicate = true;
                             break;
                         }
@@ -45,13 +46,13 @@ filters.filter('makeFilterItems', function() {
                         if (item[filterOn]) {
                             filterItems.check[item[filterOn]] = true;
                             if (!isDuplicate) {
-                                filterItems.list.push(item[filterOn])
+                                filterItems.chosen.push(item[filterOn])
                             }
                         }
                     } else {
                         if (!isDuplicate) {
                             filterItems.check[item[filterOn]] = true;
-                            filterItems.list.push(item[filterOn])
+                            filterItems.chosen.push(item[filterOn])
                         }
                     }
 
@@ -61,3 +62,15 @@ filters.filter('makeFilterItems', function() {
             };
         };
     });
+
+filters.filter('minimalRate', function(){
+  return function(items, min) {
+      var filtered = [];
+      angular.forEach(items, function(item, key) {
+          if(item.evaluation >= min) {
+              filtered.push(item);
+          }
+      });
+      return filtered;
+  };
+});
