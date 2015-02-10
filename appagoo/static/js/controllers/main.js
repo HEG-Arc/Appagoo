@@ -1,10 +1,15 @@
 'use strict';
 
 angular.module('storeApp')
-    .controller('storeController', function ($scope, $http, $filter, $animate) {
+    .controller('storeController', function ($scope, $http, $filter) {
 
         var makeFilterItems = $filter('makeFilterItems');
-        var minimalRate = $filter('minimalRate');
+        $scope.minRate=0;
+        $scope.priceFilter = {
+            free:true,
+            commercial:false
+        };
+
 
         $http.get('../../api/applications/?format=json').then(function(results) {
             $scope.applications = results.data;
@@ -18,8 +23,23 @@ angular.module('storeApp')
         };
 
         $scope.filterByMinimalRate = function(item) {
-            return $scope.filter.minimalRate = item.value;
+            return item.evaluation >= $scope.minRate;
         };
+
+        $scope.filterByPrice = function(item) {
+            if($scope.priceFilter.free && $scope.priceFilter.commercial) {
+                return item.price >= 0;
+            }
+            if(!$scope.priceFilter.free && !$scope.priceFilter.commercial) {
+                return item.price >= 0;
+            }
+            if($scope.priceFilter.free && !$scope.priceFilter.commercial) {
+                return item.price == 0;
+            }
+            if(!$scope.priceFilter.free && $scope.priceFilter.commercial) {
+                    return item.price > 0;
+            }
+        }
 
 
         function removeFromArray(array, item) {
@@ -42,7 +62,11 @@ angular.module('storeApp')
             $scope.filter.check[item] = false;
         };
 
+        $scope.changeCommercialPriceFilter = function() {
+            $scope.priceFilter.commercial = !$scope.priceFilter.commercial;
+        };
 
-
-
+        $scope.changeFreePriceFilter = function() {
+            $scope.priceFilter.free = !$scope.priceFilter.free;
+        };
     });

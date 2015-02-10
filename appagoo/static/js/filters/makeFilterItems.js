@@ -63,14 +63,3 @@ filters.filter('makeFilterItems', function() {
         };
     });
 
-filters.filter('minimalRate', function(){
-  return function(items, min) {
-      var filtered = [];
-      angular.forEach(items, function(item, key) {
-          if(item.evaluation >= min) {
-              filtered.push(item);
-          }
-      });
-      return filtered;
-  };
-});

@@ -12,7 +12,7 @@ $(document).ready(function(){
     }
   });
 
-  $('input').iCheck({checkboxClass: 'icheckbox_flat'});
+  //$('input').iCheck({checkboxClass: 'icheckbox_flat'});
   $('input.slider').slider({tooltip:'hide'});
 
   //

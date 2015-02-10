@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('storeApp', ['app.filters', 'ngResource'])
+angular.module('storeApp', ['app.filters', 'ngResource', 'angularUtils.directives.dirPagination'])
     .config(function ($interpolateProvider, $httpProvider, $resourceProvider) {
     // Force angular to use square brackets for template tag
     // The alternative is using {% verbatim %}
@@ -13,5 +13,6 @@ angular.module('storeApp', ['app.filters', 'ngResource'])
     // This only works in angular 3!
     // It makes dealing with Django slashes at the end of everything easier.
     $resourceProvider.defaults.stripTrailingSlashes = false;
+
     });
 
