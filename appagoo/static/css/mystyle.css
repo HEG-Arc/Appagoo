@@ -11115,6 +11115,21 @@ body {
 }
 @media (min-width: 768px) {
   .c4 {
+    float: left;
+    width: 33.3333333333%;
+
+  }
+}
+
+.c4b {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 1em;
+}
+@media (min-width: 768px) {
+  .c4b {
     /*float: left;*/
     width: 33.3333333333%;
     display: inline-block;

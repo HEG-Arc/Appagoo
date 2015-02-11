@@ -42,6 +42,7 @@ class Common(Configuration):
         'allauth',  # registration
         'allauth.account',  # registration
         'allauth.socialaccount',  # registration
+        'allauth.socialaccount.providers.google',
         'rest_framework', # REST api
     )
 
@@ -49,6 +50,7 @@ class Common(Configuration):
     LOCAL_APPS = (
         'users',  # custom users app
         'apps',
+        'profiles',
     )
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -232,9 +234,16 @@ class Common(Configuration):
     # Custom user app defaults
     # Select the correct user model
     AUTH_USER_MODEL = 'users.User'
-    LOGIN_REDIRECT_URL = 'users:redirect'
+    LOGIN_REDIRECT_URL = '/'
     LOGIN_URL = 'account_login'
     # END Custom user app defaults
+
+    # auth and allauth settings
+    SOCIALACCOUNT_QUERY_EMAIL = True
+    SOCIALACCOUNT_PROVIDERS = \
+    { 'google':
+        { 'SCOPE': ['profile', 'email'],
+          'AUTH_PARAMS': { 'access_type': 'online' } }}
 
     # SLUGLIFIER
     AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'

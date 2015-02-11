@@ -72,165 +72,19 @@
         <div class="w7" id="topmenu">
           <a href="#"><i class="fa fa-info-circle"></i>About</a>
           <a href="#"><i class="fa fa-envelope"></i>Contact</a>
-          <a href="#"><i class="fa fa-power-off"></i>Log in</a>
+
+          {% if request.user.is_authenticated %}
+            <a href="/accounts/logout"><i class="fa fa-power-off"></i>Log out</a>
+          {% else %}
+            <a href="/accounts/login"><i class="fa fa-power-off"></i>Log in</a>
+          {% endif %}
 
         </div>
       </div>
     </div>
   </div>
-  <!--  carrousel -->
-  <div id="slideshow-container" class="hero hidden-xs">
-    <div id="slideshow" class="carousel slide"  data-ride="carousel"  data-interval="5000"> <!--hidden-xs  carousel-fade-->
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#slideshow" data-slide-to="0" class="active"></li>
-        <li data-target="#slideshow" data-slide-to="1"></li>
-        <li data-target="#slideshow" data-slide-to="2"></li>
-      </ol>
-    
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner">
-            <!-- 1st page -->
-    
-            <div class="item active">
-                <div class="slide">
-                  <div class="container">
-                    <div class="row">
-                        <div class="w4">
-                          <img src="{% static 'images/avatar-profiler.png' %}" alt="" class="img-responsive" />
-                        </div>
-                        <div class="w5 pre2">
-                          <div class="slidetext">
-                            <h1>Everything gets better with the <em>profiler</em></h1>
-                            <h2> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, repellat?</h2>
-                            <p>
-                              <a type="button" class="btn btn-lg smooth-scroll" href="#section-easy">
-                              Try it <i class="fa fa-arrow-right"></i>
-                              </a>
-                            </p>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <!-- 2nd page -->
-            <div class="item">
-                <div class="slide">
-                  <div class="container">
-                    <div class="row">
-                        <div class="w4">
-                          <img src="{% static 'images/avatar-angry.png' %}" alt="" class="img-responsive" />
-                        </div>
-                        <div class="w5 pre2">
-                          <div class="slidetext">
-                            <h1>Slide 2 the <em>profiler</em></h1>
-                            <h2> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, repellat?</h2>
-                            <p>
-                              <a type="button" class="btn btn-lg smooth-scroll" href="#section-easy">
-                              Try it <i class="fa fa-arrow-right"></i>
-                              </a>
-                            </p>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-            </div> 
-            <!-- 3rd page -->
-            <div class="item">
-                <div class="slide">
-                  <div class="container">
-                    <div class="row">
-                        <div class="w4">
-                          <img src="{% static 'images/avatar-check.png' %}" alt="" class="img-responsive" />
-                        </div>
-                        <div class="w5 pre2">
-                          <div class="slidetext">
-                            <h1>Third gets better with the <em>profiler</em></h1>
-                            <h2> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, repellat?</h2>
-                            <p>
-                              <a type="button" class="btn btn-lg smooth-scroll" href="#section-easy">
-                              Try it <i class="fa fa-arrow-right"></i>
-                              </a>
-                            </p>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-            </div>             
-            <!-- end of pages -->
-        </div>
-    
-        <!-- Controls -->
-        <a class="left carousel-control" href="#slideshow" role="button" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#slideshow" role="button" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-        <div class="arrowbottom"></div>
-    
-    </div>
-  </div>
 
-  <!-- End of carrousel -->
-
-  <!-- ******************** Slideshow replacement ******************************* -->
-  <div  id="slideshow-replacement" class="hero visible-xs">
-    <div class="slide">
-      <div class="container">
-        <div class="slidetext">
-          <h1>Replacement for the slideshow <em>on small devices</em></h1>
-          <h2>A quick sentence says it all</h2>
-          <p>
-            <a type="button" class="btn btn-lg smooth-scroll" href="#section-easy">
-            Action boutton maybe <i class="fa fa-arrow-right"></i>
-            </a>
-          </p>
-        </div>
-        <img src="{% static 'images/avatar-hello.png' %}" alt="" class="deco img-responsive" />
-      </div>
-    </div>
-  </div>
-
-
-
-
-  <!-- *************************************************** -->
-  <div id="section-easy" class="section container">
-    <div class="row">
-      <div class="c4">
-        <img src="{% static 'images/avatar-teach.png' %}" class="img-responsive deco" >
-      </div>
-      <div class="c8 prettyframe">
-        <h1>Want to try it? It's <span class="text-c1">easy</span></h1>
-        <div class="row accent-c2">
-          <div class="col-sm-1 col-xs-2"><span class="disc disc-2x acc-bg">1</span></div>
-          <div class="col-sm-11 col-xs-10">
-            <h2 class="acc-text">Define your profile</h2>
-            <p>Tell Appagoo what you'd like to share and what must remain private</p>            
-          </div>
-        </div>
-        <div class="row accent-c1">
-          <div class="col-sm-1 col-xs-2"><span class="disc disc-2x acc-bg">2</span></div>
-          <div class="col-sm-11 col-xs-10">
-            <h2 class="acc-text">Find new apps or check yours</h2>
-            <p>Check apps that match your profile, or check your installed apps</p>            
-          </div>
-        </div>
-      </div>
-      <div class="line">
-        <p class="center">
-          <i class="fa fa-chevron-down fa-3x"></i>
-        </p>
-      </div>     
-    </div> 
-  </div>
-
+  {% if request.user.is_authenticated %}
   <!-- ******************** Welcome back ******************************* -->
   <div class="hero">
     <div class="slide">
@@ -241,10 +95,16 @@
             </div>
             <div class="w5 pre2">
               <div class="slidetext">
-                <h1>Welcome back <em>Haruki Murakami</em></h1>
+                <h1>Welcome back <em>
+                    {% if request.user.first_name or request.user.last_name %}
+                        {{ request.user.first_name }} {{ request.user.last_name }}
+                    {% else %}
+                        {{ request.user.username }}
+                    {% endif %}
+                </em></h1>
                 <h2>Appagoo has got some recommendations for you.</h2>
                 <p>
-                  <a type="button" class="btn btn-lg smooth-scroll" href="#section-easy">
+                  <a type="button" class="btn btn-lg smooth-scroll" href="/accounts/logout">
                   Not you? Log out <i class="fa fa-power-off"></i>
                   </a>
                 </p>
@@ -295,7 +155,160 @@
       </a>
     </row>
   </div>
+  {% else %}
+    <!--  carrousel -->
+  <div id="slideshow-container" class="hero hidden-xs">
+    <div id="slideshow" class="carousel slide"  data-ride="carousel"  data-interval="5000"> <!--hidden-xs  carousel-fade-->
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#slideshow" data-slide-to="0" class="active"></li>
+        <li data-target="#slideshow" data-slide-to="1"></li>
+        <li data-target="#slideshow" data-slide-to="2"></li>
+      </ol>
 
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <!-- 1st page -->
+
+            <div class="item active">
+                <div class="slide">
+                  <div class="container">
+                    <div class="row">
+                        <div class="w4">
+                          <img src="{% static 'images/avatar-profiler.png' %}" alt="" class="img-responsive" />
+                        </div>
+                        <div class="w5 pre2">
+                          <div class="slidetext">
+                            <h1>Everything gets better with the <em>profiler</em></h1>
+                            <h2> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, repellat?</h2>
+                            <p>
+                              <a type="button" class="btn btn-lg smooth-scroll" href="#section-easy">
+                              Try it <i class="fa fa-arrow-right"></i>
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- 2nd page -->
+            <div class="item">
+                <div class="slide">
+                  <div class="container">
+                    <div class="row">
+                        <div class="w4">
+                          <img src="{% static 'images/avatar-angry.png' %}" alt="" class="img-responsive" />
+                        </div>
+                        <div class="w5 pre2">
+                          <div class="slidetext">
+                            <h1>Slide 2 the <em>profiler</em></h1>
+                            <h2> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, repellat?</h2>
+                            <p>
+                              <a type="button" class="btn btn-lg smooth-scroll" href="#section-easy">
+                              Try it <i class="fa fa-arrow-right"></i>
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- 3rd page -->
+            <div class="item">
+                <div class="slide">
+                  <div class="container">
+                    <div class="row">
+                        <div class="w4">
+                          <img src="{% static 'images/avatar-check.png' %}" alt="" class="img-responsive" />
+                        </div>
+                        <div class="w5 pre2">
+                          <div class="slidetext">
+                            <h1>Third gets better with the <em>profiler</em></h1>
+                            <h2> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, repellat?</h2>
+                            <p>
+                              <a type="button" class="btn btn-lg smooth-scroll" href="#section-easy">
+                              Try it <i class="fa fa-arrow-right"></i>
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- end of pages -->
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#slideshow" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#slideshow" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+        <div class="arrowbottom"></div>
+
+    </div>
+  </div>
+
+  <!-- End of carrousel -->
+
+  <!-- ******************** Slideshow replacement ******************************* -->
+  <div  id="slideshow-replacement" class="hero visible-xs">
+    <div class="slide">
+      <div class="container">
+        <div class="slidetext">
+          <h1>Replacement for the slideshow <em>on small devices</em></h1>
+          <h2>A quick sentence says it all</h2>
+          <p>
+            <a type="button" class="btn btn-lg smooth-scroll" href="#section-easy">
+            Action boutton maybe <i class="fa fa-arrow-right"></i>
+            </a>
+          </p>
+        </div>
+        <img src="{% static 'images/avatar-hello.png' %}" alt="" class="deco img-responsive" />
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- *************************************************** -->
+  <div id="section-easy" class="section container">
+    <div class="row">
+      <div class="c4">
+        <img src="{% static 'images/avatar-teach.png' %}" class="img-responsive deco" >
+      </div>
+      <div class="c8 prettyframe">
+        <h1>Want to try it? It's <span class="text-c1">easy</span></h1>
+        <div class="row accent-c2">
+          <div class="col-sm-1 col-xs-2"><span class="disc disc-2x acc-bg">1</span></div>
+          <div class="col-sm-11 col-xs-10">
+            <h2 class="acc-text">Define your profile</h2>
+            <p>Tell Appagoo what you'd like to share and what must remain private</p>
+          </div>
+        </div>
+        <div class="row accent-c1">
+          <div class="col-sm-1 col-xs-2"><span class="disc disc-2x acc-bg">2</span></div>
+          <div class="col-sm-11 col-xs-10">
+            <h2 class="acc-text">Find new apps or check yours</h2>
+            <p>Check apps that match your profile, or check your installed apps</p>
+          </div>
+        </div>
+      </div>
+      <div class="line">
+        <p class="center">
+          <i class="fa fa-chevron-down fa-3x"></i>
+        </p>
+      </div>
+    </div>
+  </div>
+  {% endif %}
   <!-- ********************The profiler******************************* -->
 
   <div id="section-profiler" class="section bright">
@@ -329,7 +342,7 @@
             <div class="c6">
               <input id="ex1" class="slider" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="5"/>
             </div>
-          </div>    
+          </div>
           <div class="row">
             <div class="c4 pre2 label-slider">
               System
@@ -337,7 +350,7 @@
             <div class="c6">
               <input id="ex2" class="slider" data-slider-id='ex2Slider' type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="5"/>
             </div>
-          </div>                 
+          </div>
           <div class="row">
             <div class="c4 pre2 label-slider">
               Profile &amp; contacts
@@ -345,7 +358,7 @@
             <div class="c6">
               <input id="ex3" class="slider" data-slider-id='ex3Slider' type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="5"/>
             </div>
-          </div>                 
+          </div>
         </div>
         <div class="c3 pre1">
           <img src="{% static 'images/avatar-profiler.png' %}" class="img-responsive deco" >
@@ -415,24 +428,24 @@
         </div>
         <div class="c9">
           <div class="row">
-            <div class="c4">
+            <div class="c4b">
               <h3>Sort apps by</h3>
             </div>
-            <div class="c4">
+            <div class="c4b">
               <select class="form-control" ng-model="order">
                 <option value="-downloads" ng-selected="true">Most popular</option>
                 <option value="downloads">Less popular</option>
                 <option value="price">Most expensive</option>
                 <option value="-price">Less expensive</option>
-                <option value="number_evaluations">Most evaluations</option>
-                <option value="-number_evaluations">Less evaluations</option>
+                <option value="-number_evaluations">Most evaluations</option>
+                <option value="number_evaluations">Less evaluations</option>
               </select>
             </div>
           </div>
           <div class="row">
 
             <!-- one app -->
-            <div class="c4" dir_paginate="application in applications | filter: filterByCategory | filter: filterByPrice | filter: search | filter: filterByMinimalRate | orderBy: order | itemsPerPage: 12 track by application.id">
+            <div class="c4b" dir_paginate="application in applications | filter: filterByCategory | filter: filterByPrice | filter: search | filter: filterByMinimalRate | orderBy: order | itemsPerPage: 12 track by application.id">
 
               <div class="app-info">
                 <div class="pop-corner bg-yes">
