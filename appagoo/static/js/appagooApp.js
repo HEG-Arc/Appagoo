@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('storeApp', ['app.filters', 'ngResource', 'angularUtils.directives.dirPagination'])
+angular.module('appagooApp', ['app.filters', 'ngResource', 'angularUtils.directives.dirPagination'])
     .config(function ($interpolateProvider, $httpProvider, $resourceProvider) {
     // Force angular to use square brackets for template tag
     // The alternative is using {% verbatim %}

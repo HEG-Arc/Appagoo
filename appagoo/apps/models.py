@@ -4,29 +4,46 @@ from django.db import models
 class Permission(models.Model):
     label = models.CharField(max_length=500, blank=True, null=True)
 
+    def __unicode__(self):  # Python 3: def __str__(self):
+        return self.label
+
 
 class Family(models.Model):
     label = models.CharField(max_length=500, blank=True, null=True)
+
+    def __unicode__(self):  # Python 3: def __str__(self):
+        return self.label
 
 
 class Category(models.Model):
     label = models.CharField(max_length=500, blank=True, null=True)
     family = models.ForeignKey(Family, null=True)
 
+    def __unicode__(self):  # Python 3: def __str__(self):
+        return self.label
+
 
 class Downloads(models.Model):
     rank = models.IntegerField(null=True)
     label = models.CharField(max_length=500, blank=True, null=True)
+
     def __unicode__(self):  # Python 3: def __str__(self):
         return self.label
 
+
 class Content(models.Model):
     label = models.CharField(max_length=500, blank=True, null=True)
+
+    def __unicode__(self):  # Python 3: def __str__(self):
+            return self.label
 
 
 class Language(models.Model):
     code = models.CharField(max_length=10, blank=True, null=True)
     label = models.CharField(max_length=500, blank=True, null=True)
+
+    def __unicode__(self):  # Python 3: def __str__(self):
+        return self.label
 
 
 class Application(models.Model):

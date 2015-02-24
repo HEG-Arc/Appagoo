@@ -10,6 +10,8 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 from rest_framework import routers
 
+from users.views import UserViewSet, LoginView
+from profiles.views import ProfileViewSet, ThreatViewSet
 from apps.views import ApplicationViewSet, CategoryViewSet, DownloadsViewSet
 
 admin.autodiscover()
@@ -20,9 +22,14 @@ router = routers.DefaultRouter()
 router.register(r'applications', ApplicationViewSet)
 router.register(r'downloads', DownloadsViewSet)
 router.register(r'categories', CategoryViewSet)
+router.register(r'profiles', ProfileViewSet)
+router.register(r'threats', ThreatViewSet)
+router.register(r'users', UserViewSet)
+
 
 urlpatterns = patterns('',
     url(r'^api/', include(router.urls)),
+    url(r'^api/login/', LoginView.as_view(), name='login'),
     url(r'^$',  # noqa
         TemplateView.as_view(template_name='index.html'),
         name="home"),
@@ -33,17 +40,6 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-    # User management
-    url(r'^users/', include("users.urls", namespace="users")),
-    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
-    url(r'^accounts/', include('allauth.urls')),
-
-    # Uncomment the next line to enable avatars
-    url(r'^avatar/', include('avatar.urls')),
-
-    # Your stuff: custom urls go here
-    url(r'^apps/', include('apps.urls')),
-
-     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

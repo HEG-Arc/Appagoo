@@ -1,4 +1,4 @@
-from models import Application
+from models import Application, Downloads, Category
 from rest_framework import serializers
 
 
@@ -20,11 +20,11 @@ class ApplicationSerializer(serializers.HyperlinkedModelSerializer):
 
 class DownloadsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Application
+        model = Downloads
         fields = ('id', 'rank', 'label')
 
 
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Application
+        model = Category
         fields = ('id', 'label')

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('storeApp')
+angular.module('appagooApp')
     .directive('icheck', ['$timeout', '$parse', function($timeout, $parse) {
       return {
         require: 'ngModel',

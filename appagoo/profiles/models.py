@@ -25,15 +25,22 @@ class UserProfile(models.Model):
 
 
 class Threat(models.Model):
-    label = models.CharField(max_length=10, blank=True, null=True)
+    label = models.CharField(max_length=50, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     default_value = models.IntegerField(null=True)
     permissions = models.ManyToManyField(Permission, null=True)
+
+    def __unicode__(self):  # Python 3: def __str__(self):
+        return self.label
 
 
 class Profile(models.Model):
     userProfile = models.OneToOneField(UserProfile, null=True)
     threat = models.ForeignKey(Threat, null=True)
     value = models.IntegerField(null=True)
+
+    def __unicode__(self):  # Python 3: def __str__(self):
+        return self.userProfile
 
 
 

@@ -61,7 +61,7 @@
 </head>
 <!-- body class="intro" -->
 
-<body>
+<body ng-app="appagooApp">
 
   <div id="header" class="smooth-scroll"> <!-- smoothly scroll to internal links # -->
     <div class="container">
@@ -312,7 +312,7 @@
   <!-- ********************The profiler******************************* -->
 
   <div id="section-profiler" class="section bright">
-    <div class="container">
+    <div class="container" ng-controller="profileController">
       <div class="row accent-c2">
         <div class="pre3 c1 center">
           <span class="disc disc-3x acc-bg">1</span>
@@ -329,34 +329,17 @@
           <div class="row">
             <div class="col-sm-2 col-xs-4 pre6 accent-no">
               <span class="disc acc-bg"><i class="fa fa-exclamation"></i></span>
-              <span class="acc-text"> No!</span></div>
-            <div class="col-sm-2 col-xs-4 center accent-maybe"><span class="disc acc-bg"><i class="appa-tilda"></i></div>
-            <div class="col-sm-2 col-xs-4 right accent-yes marginB"><span class="acc-text">Yes</i></span>
+              <span class="acc-text"> No!</span>
+            </div>
+            <div class="col-sm-2 col-xs-4 center accent-maybe"><span class="disc acc-bg"><i class="appa-tilda"></i></span></div>
+            <div class="col-sm-2 col-xs-4 right accent-yes marginB"><span class="acc-text">Yes</span>
               <span class="disc acc-bg"><i class="fa fa-check"></i></span>
             </div>
           </div>
-          <div class="row">
-            <div class="c4 pre2 label-slider">
-              Location
-            </div>
+          <div class="row" ng-repeat="threat in threats">
+            <div class="c4 pre2 label-slider" ng-bind="threat.label"></div>
             <div class="c6">
-              <input id="ex1" class="slider" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="5"/>
-            </div>
-          </div>
-          <div class="row">
-            <div class="c4 pre2 label-slider">
-              System
-            </div>
-            <div class="c6">
-              <input id="ex2" class="slider" data-slider-id='ex2Slider' type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="5"/>
-            </div>
-          </div>
-          <div class="row">
-            <div class="c4 pre2 label-slider">
-              Profile &amp; contacts
-            </div>
-            <div class="c6">
-              <input id="ex3" class="slider" data-slider-id='ex3Slider' type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="5"/>
+              <input id=[["ex"+threat.id]] class="slider" data-slider-id=[["ex"+threat.id+"Slider"]] type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="0"/>
             </div>
           </div>
         </div>
@@ -572,11 +555,12 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-resource.js"></script>
-  <script src="{% static 'js/app.js' %}"></script>
-  <script src="{% static 'js/controllers/main.js' %}"></script>
-  <script src="{% static 'js/filters/makeFilterItems.js' %}"></script>
+  <script src="{% static 'js/appagooApp.js' %}"></script>
+  <script src="{% static 'js/controllers/storeController.js' %}"></script>
+  <script src="{% static 'js/controllers/profileController.js' %}"></script>
   <script src="{% static 'js/directives/iCheck.js' %}"></script>
   <script src="{% static 'js/directives/dirPagination.js' %}"></script>
+  <script src="{% static 'js/filters/makeFilterItems.js' %}"></script>
 </body>
 </html>
 

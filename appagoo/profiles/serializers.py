@@ -1,24 +1,14 @@
-from models import Application
+from models import Profile, Threat, UserProfile
 from rest_framework import serializers
 
 
-class ProfileSerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='email'
-    )
-
-    threat = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='label'
-    )
-
+class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Application
-        fields = ('id', 'user', 'threat', 'value')
+        model = Profile
+        fields = ('id', 'userProfile', 'threat', 'value')
 
 
-class ThreatSerializer(serializers.HyperlinkedModelSerializer):
+class ThreatSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Application
+        model = Threat
         fields = ('id', 'label', 'default_value')

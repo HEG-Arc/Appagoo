@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('storeApp')
+angular.module('appagooApp')
     .controller('storeController', function ($scope, $http, $filter) {
 
         var makeFilterItems = $filter('makeFilterItems');

@@ -44,6 +44,8 @@ class Common(Configuration):
         'allauth.socialaccount',  # registration
         'allauth.socialaccount.providers.google',
         'rest_framework', # REST api
+        'corsheaders',
+        'oauth2_provider',
     )
 
     # Apps specific for this project go here.
@@ -63,11 +65,20 @@ class Common(Configuration):
         'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'],
     }
 
+    CORS_ORIGIN_ALLOW_ALL = False
+
+    CORS_ALLOW_CREDENTIALS = True
+
+    CSRF_COOKIE_DOMAIN = "http://localhost"
+
+    CORS_ORIGIN_REGEX_WHITELIST = ('http://localhost$')
+
     # MIDDLEWARE CONFIGURATION
     MIDDLEWARE_CLASSES = (
         # Make sure djangosecure.middleware.SecurityMiddleware is listed first
         'djangosecure.middleware.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -136,10 +147,10 @@ class Common(Configuration):
 
     # GENERAL CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
-    TIME_ZONE = 'America/Los_Angeles'
+    TIME_ZONE = 'Europe/Zurich'
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-    LANGUAGE_CODE = 'en-us'
+    LANGUAGE_CODE = 'fr-ch'
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
     SITE_ID = 1

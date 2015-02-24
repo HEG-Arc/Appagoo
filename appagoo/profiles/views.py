@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from appagoo.profiles.models import Profile, Threat
-from appagoo.profiles.serializers import ProfileSerializer, ThreatSerializer
+from models import Profile, Threat
+from serializers import ProfileSerializer, ThreatSerializer
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
