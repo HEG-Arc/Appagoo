@@ -10,7 +10,7 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 from rest_framework import routers
 
-from users.views import UserViewSet, LoginView
+from users.views import UserViewSet, LoginView, LogoutView
 from profiles.views import ProfileViewSet, ThreatViewSet
 from apps.views import ApplicationViewSet, CategoryViewSet, DownloadsViewSet
 
@@ -26,10 +26,10 @@ router.register(r'profiles', ProfileViewSet)
 router.register(r'threats', ThreatViewSet)
 router.register(r'users', UserViewSet)
 
-
 urlpatterns = patterns('',
     url(r'^api/', include(router.urls)),
     url(r'^api/login/', LoginView.as_view(), name='login'),
+    url(r'^api/logout/', LogoutView.as_view(), name='logout'),
     url(r'^$',  # noqa
         TemplateView.as_view(template_name='index.html'),
         name="home"),

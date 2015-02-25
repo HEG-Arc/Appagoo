@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Import the reverse lookup function
 import json
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 
 # view imports
@@ -15,7 +15,7 @@ from braces.views import LoginRequiredMixin
 
 # Import the form from users/forms.py
 from rest_framework import viewsets, permissions, status, views
-from rest_framework.decorators import permission_classes, api_view
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from permissions import IsAccountOwner
 from serializers import UserSerializer
@@ -92,7 +92,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class LoginView(views.APIView):
-    model = User
+    permission_classes = []
 
     def post(self, request, format=None):
         data = json.loads(request.body)
@@ -100,13 +100,13 @@ class LoginView(views.APIView):
         email = data.get('email', None)
         password = data.get('password', None)
 
-        account = authenticate(email=email, password=password)
+        user = authenticate(username=email, password=password)
 
-        if account is not None:
-            if account.is_active:
-                login(request, account)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
 
-                serialized = UserSerializer(account)
+                serialized = UserSerializer(user, context={'request': request})
 
                 return Response(serialized.data)
             else:
@@ -119,3 +119,12 @@ class LoginView(views.APIView):
                 'status': 'Unauthorized',
                 'message': 'Username/password combination invalid.'
             }, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class LogoutView(views.APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, format=None):
+        logout(request)
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
