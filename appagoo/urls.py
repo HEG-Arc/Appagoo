@@ -10,7 +10,7 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 from rest_framework import routers
 
-from users.views import UserViewSet, LoginView, LogoutView
+from users.views import UserViewSet, LoginView, LogoutView, LoginTokenView
 from profiles.views import ProfileViewSet, ThreatViewSet
 from apps.views import ApplicationViewSet, CategoryViewSet, DownloadsViewSet
 
@@ -29,13 +29,19 @@ router.register(r'users', UserViewSet)
 urlpatterns = patterns('',
     url(r'^api/', include(router.urls)),
     url(r'^api/login/', LoginView.as_view(), name='login'),
+    url(r'^api/login-token/', LoginTokenView.as_view(), name='login-token'),
     url(r'^api/logout/', LogoutView.as_view(), name='logout'),
+    url(r'^api-token/', include('allauth.urls')),
     url(r'^$',  # noqa
         TemplateView.as_view(template_name='index.html'),
         name="home"),
     url(r'^about/$',
         TemplateView.as_view(template_name='pages/about.html'),
         name="about"),
+
+    url(r'^users/', include("users.urls", namespace="users")),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
+    url(r'^accounts/', include('allauth.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # Import the reverse lookup function
 import json
+from urllib import urlopen
+from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 
@@ -15,7 +17,6 @@ from braces.views import LoginRequiredMixin
 
 # Import the form from users/forms.py
 from rest_framework import viewsets, permissions, status, views
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from permissions import IsAccountOwner
 from serializers import UserSerializer
@@ -94,6 +95,13 @@ class UserViewSet(viewsets.ModelViewSet):
 class LoginView(views.APIView):
     permission_classes = []
 
+    def get(self, request, format=None):
+        content = {
+            'user': unicode(request.user),  # `django.contrib.auth.User` instance.
+            'auth': unicode(request.auth),  # None
+        }
+        return Response(content)
+
     def post(self, request, format=None):
         data = json.loads(request.body)
 
@@ -120,6 +128,46 @@ class LoginView(views.APIView):
                 'message': 'Username/password combination invalid.'
             }, status=status.HTTP_401_UNAUTHORIZED)
 
+class LoginTokenView(views.APIView):
+    permission_classes = []
+
+    def post(self, request, format=None):
+        data = json.loads(request.body)
+        access_token = data.get('access_token', None)
+
+        url = "https://www.googleapis.com/oauth2/v1/userinfo?access_token="+access_token
+        google_data = json.loads(str(urlopen(url).read()))
+        email = google_data.get('email', None)
+        uid = google_data.get('id', None)
+
+        user = authenticate(user=email)
+
+        if user is not None:
+
+            if user.is_active:
+                login(request, user)
+
+                serialized = UserSerializer(user, context={'request': request})
+
+                return Response(serialized.data)
+            else:
+                return Response({
+                    'status': 'Unauthorized',
+                    'message': 'This account has been disabled.'
+                }, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+
+            new_user = User.objects.create_user(email, email, None)
+            new_user.save()
+
+            sa = SocialAccount.objects.create(user=new_user, provider='google', uid=uid, extra_data=google_data)
+            sa.save()
+
+            return Response({
+                'status': 'Unauthorized',
+                'message': 'Username/password combination invalid.'
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
 
 class LogoutView(views.APIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -128,3 +176,5 @@ class LogoutView(views.APIView):
         logout(request)
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+

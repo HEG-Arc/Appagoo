@@ -44,8 +44,8 @@ class Common(Configuration):
         'allauth.socialaccount',  # registration
         'allauth.socialaccount.providers.google',
         'rest_framework', # REST api
+        'rest_framework.authtoken',
         'corsheaders',
-        'oauth2_provider',
     )
 
     # Apps specific for this project go here.
@@ -59,12 +59,23 @@ class Common(Configuration):
     INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
     # END APP CONFIGURATION
 
+
+    # REST CONFIGURATION
     REST_FRAMEWORK = {
+        # Use hyperlinked styles by default.
+        # Only used if the `serializer_class` attribute is not set on a view.
+        'DEFAULT_MODEL_SERIALIZER_CLASS':
+            'rest_framework.serializers.HyperlinkedModelSerializer',
+
         # Use Django's standard `django.contrib.auth` permissions,
         # or allow read-only access for unauthenticated users.
-        'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'],
+        'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        ]
     }
+    # END REST CONFIGURATION
 
+    # CORSHEADERS CONFIGURATION
     CORS_ORIGIN_ALLOW_ALL = False
 
     CORS_ALLOW_CREDENTIALS = True
@@ -72,6 +83,7 @@ class Common(Configuration):
     CSRF_COOKIE_DOMAIN = "http://localhost"
 
     CORS_ORIGIN_REGEX_WHITELIST = ('http://localhost$')
+    # END OF CORSHEADERS CONFIGURATION
 
     # MIDDLEWARE CONFIGURATION
     MIDDLEWARE_CLASSES = (
@@ -240,7 +252,6 @@ class Common(Configuration):
     ACCOUNT_AUTHENTICATION_METHOD = 'username'
     ACCOUNT_EMAIL_REQUIRED = True
     ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-    # END AUTHENTICATION CONFIGURATION
 
     # Custom user app defaults
     # Select the correct user model
@@ -255,6 +266,7 @@ class Common(Configuration):
     { 'google':
         { 'SCOPE': ['profile', 'email'],
           'AUTH_PARAMS': { 'access_type': 'online' } }}
+    # END AUTHENTICATION CONFIGURATION
 
     # SLUGLIFIER
     AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
