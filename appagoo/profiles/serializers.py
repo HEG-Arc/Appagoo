@@ -3,9 +3,14 @@ from rest_framework import serializers
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    threat = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='label'
+    )
+
     class Meta:
         model = Profile
-        fields = ('id', 'userProfile', 'threat', 'value')
+        fields = ('threat', 'value')
 
 
 class ThreatSerializer(serializers.ModelSerializer):

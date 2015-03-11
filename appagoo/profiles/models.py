@@ -35,12 +35,12 @@ class Threat(models.Model):
 
 
 class Profile(models.Model):
-    userProfile = models.OneToOneField(UserProfile, null=True)
+    userProfile = models.ForeignKey(UserProfile, null=True)
     threat = models.ForeignKey(Threat, null=True)
     value = models.IntegerField(null=True)
 
     def __unicode__(self):  # Python 3: def __str__(self):
-        return self.userProfile
+        return self.userProfile.user.username
 
 
 

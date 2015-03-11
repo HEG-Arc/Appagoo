@@ -11,7 +11,7 @@ from django.contrib import admin
 from rest_framework import routers
 
 from users.views import UserViewSet, LoginView, LogoutView, LoginTokenView
-from profiles.views import ProfileViewSet, ThreatViewSet
+from profiles.views import ThreatViewSet, ProfileViewSet
 from apps.views import ApplicationViewSet, CategoryViewSet, DownloadsViewSet
 
 admin.autodiscover()
@@ -22,9 +22,10 @@ router = routers.DefaultRouter()
 router.register(r'applications', ApplicationViewSet)
 router.register(r'downloads', DownloadsViewSet)
 router.register(r'categories', CategoryViewSet)
-router.register(r'profiles', ProfileViewSet)
+router.register(r'profiles', ProfileViewSet, base_name='profiles')
 router.register(r'threats', ThreatViewSet)
 router.register(r'users', UserViewSet)
+
 
 urlpatterns = patterns('',
     url(r'^api/', include(router.urls)),

@@ -83,6 +83,15 @@ class Common(Configuration):
     CSRF_COOKIE_DOMAIN = "http://localhost"
 
     CORS_ORIGIN_REGEX_WHITELIST = ('http://localhost$')
+
+    CORS_ALLOW_METHODS = (
+        'GET',
+        'POST',
+        'PUT',
+        'PATCH',
+        'DELETE',
+        'OPTIONS'
+    )
     # END OF CORSHEADERS CONFIGURATION
 
     # MIDDLEWARE CONFIGURATION
