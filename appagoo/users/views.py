@@ -145,9 +145,6 @@ class LoginTokenView(views.APIView):
         url = "https://www.googleapis.com/oauth2/v1/tokeninfo?access_token="+access_token
         google_data = json.loads(str(urlopen(url).read()))
 
-        print ('**********> ', access_token)
-        print ('----------> ', google_data)
-
         if google_data['issued_to']:
             email = google_data.get('email', None)
             uid = google_data.get('user_id', None)
