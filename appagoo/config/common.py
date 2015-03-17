@@ -45,7 +45,7 @@ class Common(Configuration):
         'allauth.socialaccount.providers.google',
         'rest_framework', # REST api
         'rest_framework.authtoken',
-        'corsheaders',
+        #'corsheaders',
     )
 
     # Apps specific for this project go here.
@@ -80,22 +80,14 @@ class Common(Configuration):
     # END REST CONFIGURATION
 
     # CORSHEADERS CONFIGURATION
-    CORS_ORIGIN_ALLOW_ALL = False
+    #CORS_ORIGIN_ALLOW_ALL = False
 
-    CORS_ALLOW_CREDENTIALS = True
+    #CORS_ALLOW_CREDENTIALS = True
 
-    CSRF_COOKIE_DOMAIN = "http://localhost"
+    #CSRF_COOKIE_DOMAIN = "http://localhost"
 
-    CORS_ORIGIN_REGEX_WHITELIST = ('http://localhost$')
+    #CORS_ORIGIN_REGEX_WHITELIST = ('http://localhost$')
 
-    CORS_ALLOW_METHODS = (
-        'GET',
-        'POST',
-        'PUT',
-        'PATCH',
-        'DELETE',
-        'OPTIONS'
-    )
     # END OF CORSHEADERS CONFIGURATION
 
     # MIDDLEWARE CONFIGURATION
@@ -103,7 +95,7 @@ class Common(Configuration):
         # Make sure djangosecure.middleware.SecurityMiddleware is listed first
         'djangosecure.middleware.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
-        'corsheaders.middleware.CorsMiddleware',
+        #'corsheaders.middleware.CorsMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',

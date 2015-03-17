@@ -22,7 +22,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
-
+'''
 def store(request):
     apps_list = Application.objects.all()
 
@@ -75,4 +75,4 @@ def search(request):
     args['applications'] = applications
 
     return render_to_response('apps/ajax_search.html', args)
-
+'''

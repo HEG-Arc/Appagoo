@@ -1,3 +1,4 @@
+from docutils.nodes import status
 from rest_framework import viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -10,15 +11,19 @@ class ProfileViewSet(viewsets.ViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def list(self, request):
-        print 'request.user ----------> '
+        print 'request.user ---------->'
         print request.user
         queryset = Profile.objects.filter(userProfile=UserProfile.objects.get(user=request.user))
         serializer = ProfileSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def update(self, request, pk=None):
-        queryset = Profile.objects.all()
+        print 'request.data["value"] ----------> '
+        print request.data['value']
+        queryset = Profile.objects.filter(userProfile=UserProfile.objects.get(user=request.user))
         profile = get_object_or_404(queryset, pk=pk)
+        profile.value = request.data['value']
+        profile.save()
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
 

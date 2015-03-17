@@ -135,6 +135,7 @@ class LoginView(views.APIView):
                 'message': 'Username/password combination invalid.'
             }, status=status.HTTP_401_UNAUTHORIZED)
 
+
 class LoginTokenView(views.APIView):
     permission_classes = []
 
@@ -148,16 +149,23 @@ class LoginTokenView(views.APIView):
         if google_data['issued_to']:
             email = google_data.get('email', None)
             uid = google_data.get('user_id', None)
-            user = User.objects.get(username=email)
-            if user is not None:
-                user.backend = "my social login"
+            userExists = User.objects.filter(username=email).count()
+            print 'userExists ----->'
+            print userExists
+            if userExists > 0:
+                user = User.objects.get(username=email)
+                user.backend = "allauth.account.auth_backends.AuthenticationBackend"
                 login(request, user)
                 serialized = UserSerializer(user, context={'request': request})
                 return Response(serialized.data)
             else:
-                new_user = User.objects.create_user(username=email, email=email, password=None)
-                new_user.save()
-                sa = SocialAccount.objects.create(user=new_user, provider='google', uid=uid, extra_data=google_data)
+                user = User.objects.create_user(username=email, email=email, password=None)
+                user.backend = "allauth.account.auth_backends.AuthenticationBackend"
+                user.save()
+                userProfile = UserProfile.objects.create(user=user)
+                for threat in Threat.objects.all():
+                    Profile.objects.create(userProfile=userProfile, threat=threat, value=5)
+                sa = SocialAccount.objects.create(user=user, provider='google', uid=uid, extra_data=google_data)
                 sa.save()
                 token = SocialToken.objects.create(app=SocialApp.objects.get(provider='google'), account=sa, token=access_token)
                 token.save()
@@ -169,28 +177,6 @@ class LoginTokenView(views.APIView):
                 'status': 'Unauthorized',
                 'message': 'Invalid Google access token.'
             }, status=status.HTTP_401_UNAUTHORIZED)
-
-
-
-
-
-        if sa is not None:
-
-
-
-            if user.is_active:
-                print("User is valid, active and authenticated")
-
-            else:
-                print("The password is valid, but the account has been disabled!")
-                return Response({
-                    'status': 'Unauthorized',
-                    'message': 'This account has been disabled.'
-                }, status=status.HTTP_401_UNAUTHORIZED)
-        else:
-            print("The username and password were incorrect.")
-
-
 
 
 class LogoutView(views.APIView):

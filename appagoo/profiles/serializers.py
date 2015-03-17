@@ -10,7 +10,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('threat', 'value')
+        fields = ('id', 'threat', 'value')
 
 
 class ThreatSerializer(serializers.ModelSerializer):
