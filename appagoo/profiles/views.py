@@ -11,15 +11,18 @@ class ProfileViewSet(viewsets.ViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def list(self, request):
-        print 'request.user ---------->'
+        print 'request.user ----------> '
         print request.user
-        queryset = Profile.objects.filter(userProfile=UserProfile.objects.get(user=request.user))
-        serializer = ProfileSerializer(queryset, many=True)
-        return Response(serializer.data)
+        if request.user.is_authenticated():
+            queryset = Profile.objects.filter(userProfile=UserProfile.objects.get(user=request.user))
+            serializer = ProfileSerializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            queryset = Threat.objects.all()
+            serializer = ThreatSerializer(queryset, many=True)
+            return Response(serializer.data)
 
     def update(self, request, pk=None):
-        print 'request.data["value"] ----------> '
-        print request.data['value']
         queryset = Profile.objects.filter(userProfile=UserProfile.objects.get(user=request.user))
         profile = get_object_or_404(queryset, pk=pk)
         profile.value = request.data['value']

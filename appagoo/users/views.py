@@ -157,6 +157,8 @@ class LoginTokenView(views.APIView):
                 user.backend = "allauth.account.auth_backends.AuthenticationBackend"
                 login(request, user)
                 serialized = UserSerializer(user, context={'request': request})
+                print('user authenticated?')
+                print(user.is_authenticated())
                 return Response(serialized.data)
             else:
                 user = User.objects.create_user(username=email, email=email, password=None)

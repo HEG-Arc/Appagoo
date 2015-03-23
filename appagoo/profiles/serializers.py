@@ -14,6 +14,15 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class ThreatSerializer(serializers.ModelSerializer):
+    threat = serializers.SerializerMethodField('get_label')
+    value = serializers.SerializerMethodField('get_default_value')
+
     class Meta:
         model = Threat
-        fields = ('id', 'label', 'default_value')
+        fields = ('id', 'threat', 'value')
+
+    def get_label(self, obj):
+        return obj.label
+
+    def get_default_value(self, obj):
+        return obj.default_value
