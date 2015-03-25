@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Import the AbstractUser model
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 
 # Import the basic Django ORM models library
 from django.db import models

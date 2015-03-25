@@ -11,8 +11,6 @@ class ProfileViewSet(viewsets.ViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def list(self, request):
-        print 'request.user ----------> '
-        print request.user
         if request.user.is_authenticated():
             queryset = Profile.objects.filter(userProfile=UserProfile.objects.get(user=request.user))
             serializer = ProfileSerializer(queryset, many=True)

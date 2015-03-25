@@ -167,7 +167,7 @@ class Common(Configuration):
     TIME_ZONE = 'Europe/Zurich'
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-    LANGUAGE_CODE = 'fr-ch'
+    LANGUAGE_CODE = 'en-us'
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
     SITE_ID = 1
@@ -255,13 +255,14 @@ class Common(Configuration):
 
     # Some really nice defaults
     ACCOUNT_AUTHENTICATION_METHOD = 'username'
+    ACCOUNT_USERNAME_REQUIRED = False
     ACCOUNT_EMAIL_REQUIRED = True
-    ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+    ACCOUNT_EMAIL_VERIFICATION = None
 
     # Custom user app defaults
     # Select the correct user model
     AUTH_USER_MODEL = 'users.User'
-    LOGIN_REDIRECT_URL = '/'
+    LOGIN_REDIRECT_URL = '/accounts/logged/'
     LOGIN_URL = 'account_login'
     # END Custom user app defaults
 

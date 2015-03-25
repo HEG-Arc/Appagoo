@@ -2,6 +2,7 @@
 # Import the reverse lookup function
 import json
 from urllib import urlopen
+from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.models import SocialAccount, SocialToken, SocialApp, SocialLogin
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
@@ -17,6 +18,7 @@ from braces.views import LoginRequiredMixin
 
 # Import the form from users/forms.py
 from rest_framework import viewsets, permissions, status, views
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from profiles.models import UserProfile, Profile, Threat
 from permissions import IsAccountOwner
@@ -43,7 +45,6 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
-
     form_class = UserForm
 
     # we already imported User in the view code above, remember?
@@ -67,10 +68,19 @@ class UserListView(LoginRequiredMixin, ListView):
 
 
 # ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class UserViewSet(viewsets.ViewSet):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
+    def list(self, request):
+        if request.user.is_authenticated():
+            queryset = User.objects.get(username=request.user)
+            serializer = UserSerializer(queryset, context={'request': request})
+            return Response(serializer.data)
+        else:
+            return Response()
+
+
+'''
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:
             return (permissions.AllowAny(),)
@@ -188,5 +198,5 @@ class LogoutView(views.APIView):
         logout(request)
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
-
+'''
 
