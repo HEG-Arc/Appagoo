@@ -1,0 +1,109 @@
+{% load staticfiles i18n %}<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Appagoo{% endblock title %}</title>
+    {% block css %}
+        <link rel="stylesheet" href="{% static 'css/foundation.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/apps/style.css' %}" />
+    {% endblock css %}
+    <script src="{% static 'js/vendor/modernizr.js' %}"></script>
+</head>
+
+<body>
+<div class="row">
+    <div class="large-12 columns">
+        <nav class="top-bar" data-topbar>
+            <ul class="title-area">
+
+                <li class="name">
+                    <h1><a href="/">Appagoo</a></h1>
+                </li>
+                <li class="toggle-topbar menu-icon">
+                    <a href="#"><span>menu</span></a>
+                </li>
+            </ul>
+            <section class="top-bar-section">
+                <ul class="left">
+                    <li class="active"><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'about' %}">About</a></li>
+
+                    <li>
+                        <a href="#">Link 2</a>
+                    </li>
+                </ul>
+                <ul class="right">
+                    {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a></li>
+                        <li><a href="{% url 'account_logout' %}">{% trans "Logout" %}</a></li>
+                    {% else %}
+                        <li><a href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a></li>
+                        <li><a href="{% url 'account_login' %}">{% trans "Log In" %}</a></li>
+                    {% endif %}
+                </ul>
+            </section>
+        </nav>
+    </div>
+</div>
+<div class="row">
+    <div class="large-12 columns">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div><br>
+<div class="row">
+    <div class="large-12 columns">
+
+        {% block content %}
+
+        {% endblock content %}
+
+    </div>
+</div>
+
+<footer class="row">
+    <div class="large-12 columns">
+        <hr>
+        <div class="row">
+            <div class="large-6 columns">
+                <p>© Appagoo 2015 | Powered by HE-Arc | Version <a href="https://github.com/HEG-Arc/Appagoo/commit/{{ REVISION }}">{{ REVISION }}</a></p>
+            </div>
+            <div class="large-6 columns">
+                <ul class="inline-list right">
+                    <li>
+                        <a href="#">Link 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Link 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Link 3</a>
+                    </li>
+                    <li>
+                        <a href="#">Link 4</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+{% block javascript %}
+    <script src="{% static 'js/foundation.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.js' %}"></script>
+    <script src="{% static 'js/foundation/foundation.js' %}"></script>
+    <script src="{% static 'js/apps.js' %}"></script>
+{% endblock javascript %}
+
+<script>
+    $(document).foundation();
+
+    var doc = document.documentElement;
+    doc.setAttribute('data-useragent', navigator.userAgent);
+</script>
+</body>
+</html>
