@@ -196,7 +196,7 @@ class Common(Configuration):
         'django.contrib.messages.context_processors.messages',
         'django.core.context_processors.request',
         # Your stuff: custom template context processers go here
-        'dealer.contrib.django.context_processor',
+        #'dealer.contrib.django.context_processor',
     )
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
