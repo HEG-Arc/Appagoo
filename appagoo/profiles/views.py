@@ -26,22 +26,6 @@ class UserProfileViewSet(viewsets.ViewSet):
             'message': 'Applications could not be submitted.'
         }, status=status.HTTP_400_BAD_REQUEST)
 
-    '''
-        print 'installed'
-        serializer = UserProfileSerializer()
-        if 'user' in request.POST:
-            user = request.POST['user']
-            userProfile = UserProfile.objects.get(user=User.objects.get(username=user))
-        if 'installed' in request.POST:
-            installed = request.POST['installed']
-            userProfile.installed = Application.objects.filter(package__in=installed)
-            userProfile.save()
-            print userProfile.user
-            print userProfile.installed
-        return Response(serializer.data)
-    '''
-
-
 
 class ProfileViewSet(viewsets.ViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
