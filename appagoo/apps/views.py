@@ -1,7 +1,8 @@
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from rest_framework import viewsets
+from rest_framework import viewsets, pagination
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from serializers import ApplicationSerializer, DownloadsSerializer, CategorySerializer
 
 from models import Application, Downloads, Category
@@ -9,8 +10,35 @@ from models import Application, Downloads, Category
 
 # ViewSets define the view behavior.
 class ApplicationViewSet(viewsets.ModelViewSet):
-    queryset = Application.objects.exclude(icon='').exclude(market_url='').exclude(icon=None).exclude(market_url=None)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     serializer_class = ApplicationSerializer
+    paginate_by = 18
+
+    def get_queryset(self):
+        queryset = Application.objects.exclude(icon='').exclude(market_url='').exclude(icon=None).exclude(market_url=None)
+        if 'price' in self.request.GET:
+            price = self.request.GET['price']
+            if price == '0':
+                queryset = queryset.filter(price=0.0)
+            elif price == '1':
+                queryset = queryset.filter(price__gt=0.0)
+            elif price == '2':
+                queryset = queryset.filter(price__gte=0.0)
+        if 'name' in self.request.GET:
+            name = self.request.GET['name']
+            queryset = queryset.filter(name__istartswith=name)
+        if 'minRate' in self.request.GET:
+            minRate = self.request.GET['minRate']
+            queryset = queryset.filter(evaluation__gte=minRate)
+        if 'order' in self.request.GET:
+            order = self.request.GET['order']
+            queryset = queryset.extra(order_by=[order])
+        if 'categories' in self.request.GET:
+            categories = self.request.GET['categories'].split(',')
+            queryset = queryset.exclude(category_id__in=categories)
+        print 'queryset ---------->'
+        print queryset
+        return queryset
 
 
 class DownloadsViewSet(viewsets.ModelViewSet):

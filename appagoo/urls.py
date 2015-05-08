@@ -19,7 +19,7 @@ admin.autodiscover()
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'applications', ApplicationViewSet)
+router.register(r'applications', ApplicationViewSet, base_name='applications')
 router.register(r'downloads', DownloadsViewSet)
 router.register(r'categories', CategoryViewSet)
 router.register(r'profiles', ProfileViewSet, base_name='profiles')
