@@ -2,6 +2,13 @@ from models import Profile, Threat, UserProfile
 from rest_framework import serializers
 
 
+class UserProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserProfile
+        fields = ('user', 'installed')
+
+
 class ProfileSerializer(serializers.ModelSerializer):
     threat = serializers.SlugRelatedField(
         read_only=True,

@@ -1,10 +1,46 @@
-from docutils.nodes import status
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
+from apps.models import Application
+from users.models import User
 from models import Profile, Threat, UserProfile
-from serializers import ProfileSerializer, ThreatSerializer
+from serializers import ProfileSerializer, ThreatSerializer, UserProfileSerializer
+
+
+class UserProfileViewSet(viewsets.ViewSet):
+    permission_classes = (AllowAny,)
+
+    def create(self, request):
+        if request.POST:
+            user = request.POST['user']
+            applications = request.POST['applications'].split(',')
+            userProfile = UserProfile.objects.get(user=User.objects.get(username=user))
+            for app in applications:
+                application = Application.objects.get(package=app)
+                userProfile.installed.add(application)
+                userProfile.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response({
+            'status': 'Bad request',
+            'message': 'Applications could not be submitted.'
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    '''
+        print 'installed'
+        serializer = UserProfileSerializer()
+        if 'user' in request.POST:
+            user = request.POST['user']
+            userProfile = UserProfile.objects.get(user=User.objects.get(username=user))
+        if 'installed' in request.POST:
+            installed = request.POST['installed']
+            userProfile.installed = Application.objects.filter(package__in=installed)
+            userProfile.save()
+            print userProfile.user
+            print userProfile.installed
+        return Response(serializer.data)
+    '''
+
 
 
 class ProfileViewSet(viewsets.ViewSet):

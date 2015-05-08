@@ -36,8 +36,6 @@ class ApplicationViewSet(viewsets.ModelViewSet):
         if 'categories' in self.request.GET:
             categories = self.request.GET['categories'].split(',')
             queryset = queryset.exclude(category_id__in=categories)
-        print 'queryset ---------->'
-        print queryset
         return queryset
 
 

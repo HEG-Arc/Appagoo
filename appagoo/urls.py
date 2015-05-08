@@ -11,7 +11,7 @@ from django.contrib import admin
 from rest_framework import routers
 
 from users.views import UserViewSet
-from profiles.views import ThreatViewSet, ProfileViewSet
+from profiles.views import ThreatViewSet, ProfileViewSet, UserProfileViewSet
 from apps.views import ApplicationViewSet, CategoryViewSet, DownloadsViewSet
 
 admin.autodiscover()
@@ -22,6 +22,7 @@ router = routers.DefaultRouter()
 router.register(r'applications', ApplicationViewSet, base_name='applications')
 router.register(r'downloads', DownloadsViewSet)
 router.register(r'categories', CategoryViewSet)
+router.register(r'userProfiles', UserProfileViewSet, base_name='userProfiles')
 router.register(r'profiles', ProfileViewSet, base_name='profiles')
 router.register(r'threats', ThreatViewSet)
 router.register(r'users', UserViewSet, base_name='users')
