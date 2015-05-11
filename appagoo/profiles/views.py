@@ -19,12 +19,25 @@ class UserProfileViewSet(viewsets.ViewSet):
             data = json.loads(request.body)
             user = data.get('user', None)
             applications = data.get('applications', None).split(',')
-            userProfile = UserProfile.objects.get(user=User.objects.get(username=user))
-            for app in applications:
-                application = Application.objects.get(package=app)
-                userProfile.installed.add(application)
-                userProfile.save()
-            return Response(status=status.HTTP_201_CREATED)
+            try:
+                userProfile = UserProfile.objects.get(user=User.objects.get(username=user))
+            except User.DoesNotExist:
+                userProfile = None
+            if userProfile != None:
+                for app in applications:
+                    try:
+                        application = Application.objects.get(package=app)
+                    except Application.DoesNotExist:
+                        application = None
+                    if application != None:
+                        userProfile.installed.add(application)
+                    userProfile.save()
+                return Response(status=status.HTTP_201_CREATED)
+            else:
+                return Response({
+                    'status': 'Unknown user!',
+                    'message': user + ' has no account on appagoo.com.'
+                }, status=status.HTTP_202_ACCEPTED)
         return Response({
             'status': 'Bad request',
             'message': 'Applications could not be submitted.'
