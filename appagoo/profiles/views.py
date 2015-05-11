@@ -1,5 +1,7 @@
+import json
 from rest_framework import viewsets, status
 from rest_framework.generics import get_object_or_404
+from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
 from apps.models import Application
@@ -10,11 +12,13 @@ from serializers import ProfileSerializer, ThreatSerializer, UserProfileSerializ
 
 class UserProfileViewSet(viewsets.ViewSet):
     permission_classes = (AllowAny,)
+    parser_classes = (JSONParser,)
 
     def create(self, request):
-        if request.POST:
-            user = request.POST['user']
-            applications = request.POST['applications'].split(',')
+        if request.body:
+            data = json.loads(request.body)
+            user = data.get('user', None)
+            applications = data.get('applications', None).split(',')
             userProfile = UserProfile.objects.get(user=User.objects.get(username=user))
             for app in applications:
                 application = Application.objects.get(package=app)
@@ -25,6 +29,7 @@ class UserProfileViewSet(viewsets.ViewSet):
             'status': 'Bad request',
             'message': 'Applications could not be submitted.'
         }, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class ProfileViewSet(viewsets.ViewSet):
