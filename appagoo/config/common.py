@@ -139,7 +139,14 @@ class Common(Configuration):
     # END FIXTURE CONFIGURATION
 
     # EMAIL CONFIGURATION
-    EMAIL_BACKEND = values.Value('django.core.mail.backends.smtp.EmailBackend')
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    DEFAULT_FROM_EMAIL = 'spank@appagoo.com'
+    SERVER_EMAIL = 'spank@appagoo.com'
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = 'spank@appagoo.com'
+    EMAIL_HOST_PASSWORD = 'xxxxxxxx'
     # END EMAIL CONFIGURATION
 
     # MANAGER CONFIGURATION

@@ -13,16 +13,6 @@ class UserProfile(models.Model):
     class Meta:
         db_table = 'user_profile'
 
-'''
-    def account_verified(self):
-        if self.user.is_authenticated:
-            result = EmailAddress.objects.filter(email=self.user.email)
-            if len(result):
-                return result[0].verified
-        return False
-
-    User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])
-'''
 
 class Threat(models.Model):
     label = models.CharField(max_length=50, blank=True, null=True)
