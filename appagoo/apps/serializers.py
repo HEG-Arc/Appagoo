@@ -13,9 +13,13 @@ class ApplicationSerializer(serializers.HyperlinkedModelSerializer):
         slug_field='label'
     )
 
+    score = serializers.IntegerField(
+        read_only=True
+    )
+
     class Meta:
         model = Application
-        fields = ('id', 'name', 'price', 'currency', 'evaluation', 'number_evaluations', 'icon', 'market_url', 'downloads', 'category')
+        fields = ('id', 'name', 'price', 'currency', 'evaluation', 'number_evaluations', 'icon', 'market_url', 'downloads', 'category', 'score')
 
 
 class DownloadsSerializer(serializers.HyperlinkedModelSerializer):

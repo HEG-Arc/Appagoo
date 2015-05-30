@@ -20,6 +20,10 @@ class UserProfileViewSet(viewsets.ViewSet):
             try:
                 userprofile = UserProfile.objects.get(user=request.user)
                 queryset = Application.objects.filter(userprofile=userprofile)
+                if 'profile' in request.GET:
+                    profile = request.GET['profile'].split(',')
+                    queryset = queryset.extra(select={'score': "threat_location*"+profile[0]+"+threat_system*"+profile[1]+"+threat_profil*"+profile[2]+"+threat_social*"+profile[3]+"+threat_interests*"+profile[4]+"+threat_calendar*"+profile[5]+"+threat_media*"+profile[6]})
+                    queryset = queryset.order_by('score')
             except UserProfile.DoesNotExist:
                 queryset = None
             if queryset is not None:
@@ -72,7 +76,7 @@ class ProfileViewSet(viewsets.ViewSet):
 
     def list(self, request):
         if request.user.is_authenticated():
-            queryset = Profile.objects.filter(userProfile=UserProfile.objects.get(user=request.user))
+            queryset = Profile.objects.filter(userProfile=UserProfile.objects.get(user=request.user)).order_by('id')
             serializer = ProfileSerializer(queryset, many=True)
             return Response(serializer.data)
         else:

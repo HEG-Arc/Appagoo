@@ -66,6 +66,13 @@ class Application(models.Model):
     category = models.ForeignKey(Category, null=True)
     content = models.ForeignKey(Content, null=True)
     downloads = models.ForeignKey(Downloads, null=True)
+    threat_location = models.IntegerField(default=0)
+    threat_system = models.IntegerField(default=0)
+    threat_profil = models.IntegerField(default=0)
+    threat_social = models.IntegerField(default=0)
+    threat_interests = models.IntegerField(default=0)
+    threat_calendar = models.IntegerField(default=0)
+    threat_media = models.IntegerField(default=0)
 
     def __unicode__(self):  # Python 3: def __str__(self):
         return self.package
