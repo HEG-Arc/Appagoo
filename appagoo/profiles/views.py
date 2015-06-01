@@ -23,7 +23,7 @@ class UserProfileViewSet(viewsets.ViewSet):
                 if 'profile' in request.GET:
                     profile = request.GET['profile'].split(',')
                     queryset = queryset.extra(select={'score': "threat_location*"+profile[0]+"+threat_system*"+profile[1]+"+threat_profil*"+profile[2]+"+threat_social*"+profile[3]+"+threat_interests*"+profile[4]+"+threat_calendar*"+profile[5]+"+threat_media*"+profile[6]})
-                    queryset = queryset.order_by('score')
+                    queryset = queryset.order_by('-score')
             except UserProfile.DoesNotExist:
                 queryset = None
             if queryset is not None:
