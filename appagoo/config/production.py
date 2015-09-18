@@ -13,7 +13,7 @@ from .common import Common
 
 
 class Production(Common):
-    DEBUG = True
+    DEBUG = False
     # This ensures that Django will be able to detect a secure connection
     # properly on Heroku.
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

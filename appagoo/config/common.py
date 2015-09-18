@@ -14,6 +14,7 @@ import os
 from os.path import join, dirname
 
 from configurations import Configuration, values
+import datetime
 
 BASE_DIR = dirname(dirname(__file__))
 
@@ -323,11 +324,20 @@ class Common(Configuration):
     }
     # END LOGGING CONFIGURATION
 
-    @classmethod
-    def post_setup(cls):
-        cls.DATABASES['default']['ATOMIC_REQUESTS'] = True
-
-    # Your common stuff: Below this line define 3rd party library settings
+    # CELERY CONFIGURATION
+    BROKER_URL = 'amqp://guest:guest@localhost//'
+    CELERY_ACCEPT_CONTENT = ['json']
+    CELERY_TASK_SERIALIZER = 'json'
+    CELERY_RESULT_SERIALIZER = 'json'
 
     DEALER_TYPE = 'git'
     DEALER_BACKENDS = 'git'
+
+    CELERYBEAT_SCHEDULE = {
+        "main-ticker": {
+            "task": "tickers.tasks.main_ticker_task",
+            "schedule": datetime.timedelta(weeks=1),
+            },
+        }
+
+    # END CELERY CONFIGURATION
